@@ -1,3 +1,8 @@
+
+.background{
+  background-color: black;
+}
+
 main {
   min-height: 80vh;
 }
@@ -7,7 +12,7 @@ main {
 }
 
 .rating svg {
-  color: #f8e825;
+  color: #000000;
 }
 
 .rating-text {
