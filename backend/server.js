@@ -12,6 +12,10 @@ connectDB(); //connecting to mongodb
 
 const app = express();
 
+// Body parser middleware(parsing body data)
+app.use(express.json());
+app.use(express.urlencoded({extended: true}))
+
 app.get('/', (req,res) => {
     res.send('Hello World!');
 });
