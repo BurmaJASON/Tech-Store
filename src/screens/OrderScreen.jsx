@@ -2,7 +2,7 @@ import { Link, useParams } from 'react-router-dom'
 import { Row,Col,ListGroup, Image,Form,Button,Card } from 'react-bootstrap'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
-import { useGetOrderDetailsQuery,usePayOrderMutation,useGetPayPalClientIdQuery } from '../slices/orderApiSlice'
+import { useGetOrderDetailsQuery,usePayOrderMutation,useGetPayPalClientIdQuery, useDeliverOrderMutation } from '../slices/orderApiSlice'
 import { PayPalButtons, usePayPalScriptReducer } from '@paypal/react-paypal-js'
 import { toast } from 'react-toastify'
 import { useSelector } from 'react-redux'
@@ -19,6 +19,18 @@ const OrderScreen = () => {
     const { data:paypal, isLoading: loadingPayPal, error: errorPaypal } = useGetPayPalClientIdQuery()
     
     const { userInfo } = useSelector(state => state.auth);
+
+    const [ deliverOrder, { isLoading : loadingDeliver } ] = useDeliverOrderMutation();
+
+    const deliverOrderHandler = async () => {
+        try{
+            await deliverOrder(orderId);
+            refetch();
+            toast.success('Order Delivered')
+        }catch(err) {
+            toast.error(err?.data?.message || err.message);
+        }
+    }
 
     useEffect(() => {
         if(!errorPaypal && !loadingPayPal && paypal.clientId) {
@@ -181,6 +193,14 @@ const OrderScreen = () => {
                                     </ListGroup.Item>
                                 ) }
                                 {/* Mark As Delivered Placeholder */}
+                                { loadingDeliver && <Loader/> }
+                                { userInfo && userInfo.isAdmin && order.isPaid && !order.isDelivered && (
+                                    <ListGroup.Item>
+                                        <Button type='button' className='btn btn-block' onClick={deliverOrderHandler}>
+                                            Mark As Delivered
+                                        </Button>
+                                    </ListGroup.Item>
+                                ) }
                         </ListGroup>
                     </Card>
                 </Col>
