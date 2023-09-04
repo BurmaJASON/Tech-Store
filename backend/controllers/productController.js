@@ -9,11 +9,26 @@ import asyncHandler from "../middleware/asyncHandler.js";
 const getProducts = asyncHandler(async(req,res) => {
     const products = await Product.find({});
     res.json({products})
-    
-
 });
 
-
+//@desc Create a product
+//@route Post /api/products
+//@access Private/Admin
+const createProduct = asyncHandler(async(req,res) => {
+    const product = new Product({
+        name : 'Sample name',
+        price : 0,
+        user : req.user._id,
+        image : '/images/sample.jpg',
+        brand : 'Sample Brand',
+        category : 'sample category',
+        countInStock : 0,
+        numReviews : 0,
+        description : 'Sample description'
+    })
+    const createdProduct = await product.save()
+    res.status(201).json(createdProduct);
+});
 
 
 //@desc Fetch a product 
@@ -31,4 +46,4 @@ const getProductById = asyncHandler(async(req,res) => {
 });
 
 
-export { getProducts, getProductById };
+export { getProducts, getProductById, createProduct };
