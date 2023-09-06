@@ -81,7 +81,7 @@ const createProductReview = asyncHandler(async(req,res) => {
 
     if(product) {
         const alreadyReviewed = product.reviews.find(
-            (review) => review.user.toStirng() === req.user._id.toStirng()
+            (review) => review.user.toString() === req.user._id.toString()
         )
         if(alreadyReviewed) {
             res.status(400)
@@ -124,4 +124,4 @@ const getProductById = asyncHandler(async(req,res) => {
 });
 
 
-export { getProducts, getProductById, createProduct, updateProduct, deleteProductm, createProductReview };
+export { getProducts, getProductById, createProduct, updateProduct, deleteProduct, createProductReview };
