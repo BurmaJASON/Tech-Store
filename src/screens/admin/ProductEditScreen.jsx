@@ -19,7 +19,7 @@ const ProductEditScreen = () => {
     const [ countInStock, setCountInStock ] = useState('')
     const [ description, setDescription ] = useState('')
 
-    const { data : product, isLoading, refetch, error } = useGetProductDetailQuery(productId); 
+    const { data : product, isLoading, error } = useGetProductDetailQuery(productId); 
 
     const [ updateProduct, { isLoading : loadingUpdate }] = useUpdateProductMutation();
 
@@ -99,6 +99,7 @@ const ProductEditScreen = () => {
                             <Form.Control type='text' placeholder='Enter image url' value={image} onChange={(e) => setImage} ></Form.Control>
                             <Form.Control type='file' label='Choose File' onChange={uploadFileHandler} ></Form.Control>
                         </Form.Group>
+                        { loadingUpload && <Loader/> }
 
                         <Form.Group controlId='brand' className='my-2'>
                             <Form.Label>Brand</Form.Label>
