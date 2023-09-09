@@ -57,7 +57,7 @@ const OrderScreen = () => {
             try {
                 await payOrder({orderId, details})
                 refetch();
-                toast.success('Payment successful')
+                toast.success('Order is Paid')
             }catch (err) {
                 toast.error(err?.data?.message || err.message)
             }
@@ -89,7 +89,7 @@ const OrderScreen = () => {
     }
 
 
-    return isLoading ? <Loader/> : error ? <Message variant='danger'>{error?.data?.message || error.error}</Message>  : (
+    return isLoading ? <Loader/> : error ? <Message variant='danger'>{error.data.message}</Message>  : (
         <>
             <h1>Order {order._id} </h1>
             <Row>

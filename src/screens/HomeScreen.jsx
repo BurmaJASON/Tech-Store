@@ -11,7 +11,7 @@ import Meta from '../components/Meta'
 const HomeScreen = () => {
   const { pageNumber, keyword } = useParams();
   const { data, isLoading, error } =useGetProductsQuery({keyword, pageNumber});
-console.log(data);
+// console.log(data);
   return (
     <>
         { !keyword ? <ProductCarousel/> : (<Link to='/' className='btn btn-light mb-4'>Go Back</Link>) }
